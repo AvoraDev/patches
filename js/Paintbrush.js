@@ -39,6 +39,7 @@ export class Paintbrush {
             this.Resize();
         });
     }
+    
     get width() {return this._c.width};
     set width(w) {this._c.width = w;}
     get height() {return this._c.height};
