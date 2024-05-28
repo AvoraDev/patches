@@ -2,6 +2,12 @@ import { BasePuppet } from "./BasePuppet.js";
 export { PP as PlayerPuppet };
 
 class PP extends BasePuppet {
+    // something akin to an enum
+    static _ActionStates = Object.freeze({
+        Disabled: -1,
+        Inactive: 0,
+        Active: 1
+    });
     /**
      * todo - Description
      * @param {Number} x
@@ -21,88 +27,100 @@ class PP extends BasePuppet {
         super(x, y, vect, speed, appearance, config = {});
 
         // todo - implement acceleration and such
-        this._movementStep = 0.5;
+        this._movementStep = 0.25;
         this._ctrs = {
             up: {
-                action: () => {
+                active: () => {
                     if (this.vect.y < -1) {
                         this.vect.y -= this._movementStep;
                     } else {
                         this.vect.y = -1;
                     }
                 },
+                inactive: () => {
+                    if (this.vect.y < 0) {
+                        this.vect.y += this._movementStep;
+                    } else {
+                        this._ctrs.up.flag = PP.AS.Disabled;
+                    }
+                },
                 key: 'KeyW',
-                flag: false
+                flag: -1
             },
             down: {
-                action: () => {
+                active: () => {
                     if (this.vect.y < 1) {
                         this.vect.y += this._movementStep;
                     } else {
                         this.vect.y = 1;
                     }
                 },
+                inactive: () => {
+                    if (this.vect.y > 0) {
+                        this.vect.y -= this._movementStep;
+                    } else {
+                        this._ctrs.down.flag = PP.AS.Disabled;
+                    }
+                },
                 key: 'KeyS',
-                flag: false
+                flag: -1
             },
             left: {
-                action: () => {
+                active: () => {
                     if (this.vect.x < -1) {
                         this.vect.x -= this._movementStep;
                     } else {
                         this.vect.x = -1;
                     }
                 },
+                inactive: () => {
+                    if (this.vect.x < 0) {
+                        this.vect.x += this._movementStep;
+                    } else {
+                        this._ctrs.left.flag = PP.AS.Disabled;
+                    }
+                },
                 key: 'KeyA',
-                flag: false
+                flag: -1
             },
             right: {
-                action: () => {
+                active: () => {
                     if (this.vect.x < 1) {
                         this.vect.x += this._movementStep;
                     } else {
                         this.vect.x = 1;
                     }
                 },
+                inactive: () => {
+                    if (this.vect.x > 0) {
+                        this.vect.x -= this._movementStep;
+                    } else {
+                        this._ctrs.right.flag = PP.AS.Disabled;
+                    }
+                },
                 key: 'KeyD',
-                flag: false
-            } // ,
-            // specialLight: {
-            //     action() {
-    
-            //     },
-            //     flag: false
-            // },
-            // specialHeavy: {
-            //     action() {
-    
-            //     },
-            //     flag: false
-            // },
+                flag: -1
+            }
         }
     }
     SetupInputHandling() {
         $(window).keydown(e => {
             Object.keys(this._ctrs).forEach(key => {
-                if (e.code === this._ctrs[key].key) {
-                    this._ctrs[key].flag = true;
-                }
+                if (e.code === this._ctrs[key].key) this._ctrs[key].flag = PP.AS.Active;
             });
         });
 
         $(window).keyup(e => { 
             Object.keys(this._ctrs).forEach(key => {
-                if (e.code === this._ctrs[key].key) {
-                    this._ctrs[key].flag = false;
-                }
+                if (e.code === this._ctrs[key].key) this._ctrs[key].flag = PP.AS.Inactive;
             });
         });
     }
     ActionHandler() {
         Object.keys(this._ctrs).forEach(key => {
-            if (this._ctrs[key].flag) {
-                this._ctrs[key].action();
-            }
+            if (this._ctrs[key].flag === PP.AS.Active) this._ctrs[key].active();
+            if (this._ctrs[key].flag === PP.AS.Inactive) this._ctrs[key].inactive();
         });  
     }
+    static get AS() {return this._ActionStates;}
 }

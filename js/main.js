@@ -72,6 +72,12 @@ $(document).ready( () => {
             y: ${player.y.toFixed(2)}<br>
             dX: ${player.vect.x}<br>
             dY: ${player.vect.y}<br>
+            <br>
+            flags:<br>
+            up: ${player._ctrs.up.flag}<br>
+            up: ${player._ctrs.down.flag}<br>
+            up: ${player._ctrs.left.flag}<br>
+            up: ${player._ctrs.right.flag}<br>
         `);
     }, 1000 / tps);
 
