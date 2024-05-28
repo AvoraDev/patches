@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery + Canvas</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .fullscreen {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .centered-children {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #disp-container {
+            background-color: rgb(50, 60, 100);
+        }
+        #disp {
+            /* width: 70%;
+            height: 50%; */
+            background-color: white;
+        }
+        #debug-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            background-color: rgba(50, 50, 50, 0.6);
+            color: white;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="module" src="./js/main.js"></script>
+</head>
+<body>
+    <div class="fullscreen centered-children" id="disp-container">
+        <canvas id="disp"></canvas>
+    </div>
+
+    <div id="debug-container">
+        <p id="debug">000</p>
+    </div>
+</body>
+</html>
