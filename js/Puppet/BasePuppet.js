@@ -27,9 +27,11 @@ class BP {
      * -- width
      * - height
      * - color
-     * @param {Object} config - Optional changes
+     * @param {Object} Config
+     * -- Optional changes
      * - zDepth: int ? 0
      * - collidable: boolean ? true
+     * - collisionRebound: boolean ? true
      * @returns {BP}
      */
     constructor(x, y, vect, speed, appearance, config = {}) {
@@ -300,9 +302,9 @@ class BP {
             puppet._update();
         });
     }
+
     get hWidth() {return this.width / 2};
     get hHeight() {return this.height / 2};
-
     static get PGCenter() {
         return {
             x: ((this.Playground[1].x - this.Playground[0].x) / 2) + (this.Config.playground.margin.left),

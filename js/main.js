@@ -3,7 +3,7 @@ import { BasePuppet } from "./Puppet/BasePuppet.js";
 import { PlayerPuppet } from "./Puppet/PlayerPuppet.js";
 
 // canvas setup
-let disp = new Paintbrush('#disp', '#disp-container', 'black'); // 'rgb(255, 255, 255)');
+let disp = new Paintbrush('#disp', '#disp-container', 'black');
 disp.EnableAutoResize();
 
 // Puppet setup
