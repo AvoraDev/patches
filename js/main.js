@@ -8,8 +8,14 @@ disp.EnableAutoResize();
 
 // Puppet setup
 BasePuppet.SetPaintbrush(disp);
-BasePuppet.SetPlayground(20);
+BasePuppet.SetPlayground({
+    top: 20,
+    bottom: 20,
+    left: 75,
+    right: 75
+});
 BasePuppet.Config.playground.debug = true;
+let center = BasePuppet.PGCenter; // used for spawn coords
 
 // other
 let _deb = $('#debug'); 
@@ -24,8 +30,8 @@ function randFloat(min, max) { // min and max included
 
 // puppets
 const player = new PlayerPuppet(
-    disp.width / 2,
-    disp.height / 2,
+    center.x,
+    center.y,
     {x: 0, y: 0},
     3,
     {
@@ -39,8 +45,8 @@ player.SetupInputHandling();
 const bots = [];
 for (let i = 0; i < 50; i++) {
     bots.push(new BasePuppet(
-        (disp.width / 2) + randFloat(-40, 40),
-        (disp.height / 2) + randFloat(-40, 40),
+        center.x + randFloat(-40, 40),
+        center.y + randFloat(-40, 40),
         {
             x: randFloat(-1, 1),
             y: randFloat(-1, 1)

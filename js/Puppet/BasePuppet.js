@@ -220,10 +220,8 @@ class BP {
         );
     }
     /**
-     * Setup for Puppet's Paintbrush and bounding box 
+     * Sets Paintbrush that will be used for all puppets. 
      * @param {Paintbrush} paintbrush
-     * @param {Number} playgroundmargin default: 0
-     * @param {Boolean} autoResize default: true
      * @returns {void}
      */
     static SetPaintbrush(paintbrush) {
@@ -234,23 +232,44 @@ class BP {
     static _resizePlayground() {
         this.Playground = [
             {
-                x: 0 + this.Config.playground.margin,
-                y: 0 + this.Config.playground.margin
+                x: 0 + this.Config.playground.margin.left,
+                y: 0 + this.Config.playground.margin.top
             },
             {
-                x: this.paintbrush.width - this.Config.playground.margin,
-                y: this.paintbrush.height - this.Config.playground.margin
+                x: this.paintbrush.width - this.Config.playground.margin.right,
+                y: this.paintbrush.height - this.Config.playground.margin.bottom
             }
         ];
     }
+    /**
+     * Resizes Playground to Paintbrush's dimensions.
+     * @param {Number} playgroundmargin
+     * - default: 0
+     * - Advanced: Object with the following properties:
+     *      - top
+     *      - bottom
+     *      - left
+     *      - right
+     * @param {Boolean} autoResize=true
+     * @returns {void}
+     */
     static SetPlayground(playgroundmargin = 0, autoResize = true) {
-        this.Config.playground.margin = playgroundmargin;
+        this.Config.playground.margin = (typeof(playgroundmargin) !== 'number') ? 
+            playgroundmargin: 
+            {
+                top: playgroundmargin,
+                bottom: playgroundmargin,
+                left: playgroundmargin,
+                right: playgroundmargin
+            };
+        
         this._resizePlayground(); // initial resize
-
-        // todo - allow auto resize of custom playground
-        // consider using margin to do so
         if (autoResize) $(window).resize(() => {this._resizePlayground()});
     }
+    /**
+     * Draws all puppets to Paintbrush
+     * @returns {void}
+     */
     static DrawAll() {
         this._home.forEach(puppet => {
             puppet._draw();
@@ -272,6 +291,10 @@ class BP {
             this.ctx.stroke();
         }
     }
+    /**
+     * Updates all puppet's position and collision.
+     * @returns {void}
+     */
     static UpdateAll() {
         this._home.forEach(puppet => {
             puppet._update();
@@ -279,10 +302,11 @@ class BP {
     }
     get hWidth() {return this.width / 2};
     get hHeight() {return this.height / 2};
+
     static get PGCenter() {
         return {
-            x: ((this.Playground[1].x - this.Playground[0].x) + (this.Config.playground.margin * 2)) / 2,
-            y: ((this.Playground[1].y - this.Playground[0].y) + (this.Config.playground.margin * 2)) / 2
+            x: ((this.Playground[1].x - this.Playground[0].x) / 2) + (this.Config.playground.margin.left),
+            y: ((this.Playground[1].y - this.Playground[0].y) / 2) + (this.Config.playground.margin.top)
         };
     };
     // get points() {

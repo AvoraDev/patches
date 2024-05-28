@@ -18,7 +18,8 @@ class PP extends BasePuppet {
      * -- width
      * - height
      * - color
-     * @param {Object} config - Optional changes
+     * @param {Object} Config
+     * -- Optional changes
      * - zDepth: int ? 0
      * - collidable: boolean ? true
      * @returns {BP}
@@ -103,6 +104,10 @@ class PP extends BasePuppet {
             }
         }
     }
+    /**
+     * Creates event handlers to listen for user input.
+     * @returns {void}
+     */
     SetupInputHandling() {
         $(window).keydown(e => {
             Object.keys(this._ctrs).forEach(key => {
@@ -116,6 +121,10 @@ class PP extends BasePuppet {
             });
         });
     }
+    /**
+     * Executes the puppet's input actions.
+     * @returns {void}
+     */
     ActionHandler() {
         Object.keys(this._ctrs).forEach(key => {
             if (this._ctrs[key].flag === PP.AS.Active) this._ctrs[key].active();
