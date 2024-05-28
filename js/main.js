@@ -2,6 +2,18 @@ import { Paintbrush } from "./Paintbrush.js";
 import { BasePuppet } from "./Puppet/BasePuppet.js";
 import { PlayerPuppet } from "./Puppet/PlayerPuppet.js";
 
+switch(window.location.protocol) {
+    case 'https:':
+        document.title += " (GitHub)";
+        break;
+    case 'http:':
+    case 'file:':
+        document.title += " (Local)";
+        break;
+    default:
+        document.title += " (???)";
+}
+
 // canvas setup
 let disp = new Paintbrush('#disp', '#disp-container', 'black');
 disp.EnableAutoResize();
