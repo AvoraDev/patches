@@ -40,7 +40,6 @@ const player = new PlayerPuppet(
         color: 'rgb(100, 255, 50)'
     }
 )
-player.SetupInputHandling();
 
 const bots = [];
 for (let i = 0; i < 50; i++) {
@@ -58,8 +57,6 @@ for (let i = 0; i < 50; i++) {
             color: `hsl(${randInt(0, 360)}, 100%, 50%)`
         }
     ));
-
-    // bots[bots.length - 1].collisionRebound = false;
 }
 
 // init

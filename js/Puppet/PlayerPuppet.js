@@ -22,10 +22,12 @@ class PP extends BasePuppet {
      * -- Optional changes
      * - zDepth: int ? 0
      * - collidable: boolean ? true
+     * @param {Boolean} initActionHandling=true
      * @returns {BP}
      */
-    constructor(x, y, vect, speed, appearance, config = {}) {
-        super(x, y, vect, speed, appearance, config = {});
+    constructor(x, y, vect, speed, appearance, config = {}, initActionHandling = true) {
+        super(x, y, vect, speed, appearance, config);
+        this.controllable = (config.controllable !== undefined) ? config.controllable : true;
 
         // todo - implement acceleration and such
         this._movementStep = 0.25;
@@ -103,6 +105,8 @@ class PP extends BasePuppet {
                 flag: -1
             }
         }
+
+        if (initActionHandling) this.SetupInputHandling();
     }
     /**
      * Creates event handlers to listen for user input.
@@ -110,12 +114,16 @@ class PP extends BasePuppet {
      */
     SetupInputHandling() {
         $(window).keydown(e => {
+            if (!this.controllable) return;
+
             Object.keys(this._ctrs).forEach(key => {
                 if (e.code === this._ctrs[key].key) this._ctrs[key].flag = PP.AS.Active;
             });
         });
 
-        $(window).keyup(e => { 
+        $(window).keyup(e => {
+            if (!this.controllable) return;
+            
             Object.keys(this._ctrs).forEach(key => {
                 if (e.code === this._ctrs[key].key) this._ctrs[key].flag = PP.AS.Inactive;
             });
