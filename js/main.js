@@ -102,7 +102,7 @@ $(document).ready(() => {
         BasePuppet.DrawAll();
 
         // you'll never guess what it is :o
-        player._debugUtil(['xyActual','pinpoint']);
+        player.Debug('rgb(255, 255, 255)', 'xyActual', 'pinpoint');
     }, 1000 / fps);
 
 });

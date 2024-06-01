@@ -150,7 +150,7 @@ class PP extends BasePuppet {
                     this._ctrs[action].active();
                     break;
                 default:
-                    console.log('ERROR: Unknown action state');
+                    console.log('Warning: Unknown action state');
                     break;
             }
         });  
