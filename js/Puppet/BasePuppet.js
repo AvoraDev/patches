@@ -61,14 +61,16 @@ class BP {
      * Options:
      * - xyActual
      * - bb
-     * @param {string[]} args
+     * @param {String} color
+     * @param {String[]} ...args
      * @returns {void}
      */
-    _debugUtil(args, color = 'rgb(255, 255, 255)') {
-        // param name sounds cool
-        BP.ctx.fillStyle = color;
+    Debug(color, ...args) {
+        // set colors
         BP.ctx.strokeStyle = color;
-
+        BP.ctx.fillStyle = color;
+        
+        // args sounds cool 
         args.forEach(item => {
             switch (item) {
                 case 'xyActual':
@@ -88,6 +90,7 @@ class BP {
                     // todo - implement
                     break;
                 default:
+                    console.log(`Warning: ${item} is not a valid argument`);
                     break;
             }
         });

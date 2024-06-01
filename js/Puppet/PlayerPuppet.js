@@ -5,8 +5,9 @@ class PP extends BasePuppet {
     // something akin to an enum
     static _ActionStates = Object.freeze({
         Disabled: -1,
-        Inactive: 0,
-        Active: 1
+        Off: 0,
+        Inactive: 1,
+        Active: 2
     });
     /**
      * todo - Description
@@ -47,11 +48,11 @@ class PP extends BasePuppet {
                     if (this.vect.y < 0) {
                         this.vect.y += this._movementStep;
                     } else {
-                        this._ctrs.up.flag = PP.AS.Disabled;
+                        this._ctrs.up.flag = PP.AS.Off;
                     }
                 },
                 key: 'KeyW',
-                flag: -1
+                flag: PP.AS.Off
             },
             down: {
                 active: () => {
@@ -65,11 +66,11 @@ class PP extends BasePuppet {
                     if (this.vect.y > 0) {
                         this.vect.y -= this._movementStep;
                     } else {
-                        this._ctrs.down.flag = PP.AS.Disabled;
+                        this._ctrs.down.flag = PP.AS.Off;
                     }
                 },
                 key: 'KeyS',
-                flag: -1
+                flag: PP.AS.Off
             },
             left: {
                 active: () => {
@@ -83,11 +84,11 @@ class PP extends BasePuppet {
                     if (this.vect.x < 0) {
                         this.vect.x += this._movementStep;
                     } else {
-                        this._ctrs.left.flag = PP.AS.Disabled;
+                        this._ctrs.left.flag = PP.AS.Off;
                     }
                 },
                 key: 'KeyA',
-                flag: -1
+                flag: PP.AS.Off
             },
             right: {
                 active: () => {
@@ -101,11 +102,11 @@ class PP extends BasePuppet {
                     if (this.vect.x > 0) {
                         this.vect.x -= this._movementStep;
                     } else {
-                        this._ctrs.right.flag = PP.AS.Disabled;
+                        this._ctrs.right.flag = PP.AS.Off;
                     }
                 },
                 key: 'KeyD',
-                flag: -1
+                flag: PP.AS.Off
             }
         }
     }
@@ -117,16 +118,16 @@ class PP extends BasePuppet {
         $(window).keydown(e => {
             if (!this.controllable) return;
 
-            Object.keys(this._ctrs).forEach(key => {
-                if (e.code === this._ctrs[key].key) this._ctrs[key].flag = PP.AS.Active;
+            Object.keys(this._ctrs).forEach(action => {
+                if (e.code === this._ctrs[action].key) this._ctrs[action].flag = PP.AS.Active;
             });
         });
 
         $(window).keyup(e => {
             if (!this.controllable) return;
             
-            Object.keys(this._ctrs).forEach(key => {
-                if (e.code === this._ctrs[key].key) this._ctrs[key].flag = PP.AS.Inactive;
+            Object.keys(this._ctrs).forEach(action => {
+                if (e.code === this._ctrs[action].key) this._ctrs[action].flag = PP.AS.Inactive;
             });
         });
     }
@@ -135,9 +136,23 @@ class PP extends BasePuppet {
      * @returns {void}
      */
     ActionHandler() {
-        Object.keys(this._ctrs).forEach(key => {
-            if (this._ctrs[key].flag === PP.AS.Active) this._ctrs[key].active();
-            if (this._ctrs[key].flag === PP.AS.Inactive) this._ctrs[key].inactive();
+        Object.keys(this._ctrs).forEach(action => {
+            switch(this._ctrs[action].flag) {
+                case PP.AS.Off:
+                    break;
+                case PP.AS.Disabled:
+                    // todo - implement
+                    break;
+                case PP.AS.Inactive:
+                    this._ctrs[action].inactive();
+                    break;
+                case PP.AS.Active:
+                    this._ctrs[action].active();
+                    break;
+                default:
+                    console.log('Warning: Unknown action state');
+                    break;
+            }
         });  
     }
 
