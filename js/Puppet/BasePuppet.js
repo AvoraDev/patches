@@ -1,4 +1,4 @@
-import { Paintbrush } from "../Paintbrush.js";
+import { Paintbrush } from "./Paintbrush.js";
 export { BP as BasePuppet };
 
 class BP {
