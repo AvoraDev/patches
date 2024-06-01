@@ -1,4 +1,4 @@
-import { Paintbrush } from "./Paintbrush.js";
+import { Paintbrush } from "./Puppet/Paintbrush.js";
 import { BasePuppet } from "./Puppet/BasePuppet.js";
 import { PlayerPuppet } from "./Puppet/PlayerPuppet.js";
 import { Shovel } from "./util/Shovel.js"
