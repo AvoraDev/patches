@@ -1,6 +1,7 @@
 import { Paintbrush } from "./Puppet/Paintbrush.js";
 import { BasePuppet } from "./Puppet/BasePuppet.js";
 import { PlayerPuppet } from "./Puppet/PlayerPuppet.js";
+import { CombatSetup, AddDefaultMelee} from "./Puppet/optional/combat.js";
 import { Shovel } from "./util/Shovel.js"
 import { RNG } from "./util/RNG.js";
 
@@ -30,6 +31,7 @@ BasePuppet.SetPlayground({
     right: 75
 });
 BasePuppet.Config.playground.debug = true;
+CombatSetup();
 let center = BasePuppet.PGCenter; // used for spawn coords
 
 // other
@@ -47,23 +49,8 @@ const player = new PlayerPuppet(
         color: 'rgb(100, 255, 50)'
     }
 )
-const pDeb = new Shovel(
-    player,
-    [
-        'speed',
-        'width',
-        'height',
-        'color',
-        'zDepth',
-        'cheats',
-        'collisionRebound',
-        '_movementStep',
-        'active',
-        'inactive',
-        'key'
-    ],
-    true
-);
+player.ImplementCombat(100, 100, 100, 100, 100);
+AddDefaultMelee(player, 'KeyJ', 1.2);
 
 const bots = [];
 for (let i = 0; i < 50; i++) {
@@ -82,6 +69,26 @@ for (let i = 0; i < 50; i++) {
         }
     ));
 }
+
+// debugging
+const pDeb = new Shovel(
+    player,
+    [
+        'speed',
+        'width',
+        'height',
+        'color',
+        'zDepth',
+        'cheats',
+        'collisionRebound',
+        '_movementStep',
+        'active',
+        'inactive',
+        'key',
+        'disabledDuration'
+    ],
+    true
+);
 
 // init
 $(document).ready(() => {
@@ -104,5 +111,4 @@ $(document).ready(() => {
         // you'll never guess what it is :o
         player.Debug('rgb(255, 255, 255)', 'xyActual', 'pinpoint');
     }, 1000 / fps);
-
 });
