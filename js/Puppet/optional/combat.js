@@ -25,7 +25,6 @@ export function AddDefaultMelee(puppet, key, atkModifier = 1) {
             this.flag = PlayerPuppet.AS.Off;
         },
         key,
-        PlayerPuppet.AS.Off,
         10
     );
 }

@@ -91,7 +91,7 @@ class PP extends BasePuppet {
             }
         }
     }
-    AddAction(name, activeFunc, inactiveFunc, key, startFlag, disabledDuration = 0) {
+    AddAction(name, activeFunc, inactiveFunc, key, disabledDuration = 0, startFlag = PP.AS.Off) {
         if (this._ctrs.hasOwnProperty(name)) {
             console.log(`Warning: '${name}' action already exists. Use another name.`);
             return;
@@ -125,7 +125,7 @@ class PP extends BasePuppet {
             
             Object.keys(this._ctrs).forEach(action => {
                 if (this._ctrs[action].flag === PP.AS.Disabled) return;
-                
+
                 if (e.code === this._ctrs[action].key) this._ctrs[action].flag = PP.AS.Inactive;
             });
         });
