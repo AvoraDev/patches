@@ -7,6 +7,7 @@
     <style>
         body {
             margin: 0;
+            font-family: 'Courier New', Courier, monospace;
         }
         .fullscreen {
             position: absolute;
@@ -34,8 +35,12 @@
             margin: 0.5rem;
             padding: 0.25rem 0.5rem;
             line-height: 160%;
+            font-size: small;
             background-color: rgba(50, 50, 50, 0.6);
             color: white;
+        }
+        #debug-container input {
+            width: 8rem;
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -48,6 +53,18 @@
 
     <div id="debug-container">
         <p id="debug">000</p>
+        <label for="fps-set">Set FPS:</label> <br>
+        <input type="number" id="fps-set" placeholder="Press enter to set">
+
+        <br> <br>
+        
+        <label for="tps-set">Set TPS:</label> <br>
+        <input type="number" id="tps-set" placeholder="Press enter to set">
+
+        <br> <br>
+
+        <button type="button" id="pause">Pause</button>
+        <button type="button" id="step" disabled>Step</button>
     </div>
 </body>
 </html>

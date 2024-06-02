@@ -90,25 +90,71 @@ const pDeb = new Shovel(
     true
 );
 
-// init
-$(document).ready(() => {
-    let ticks, frames; // for intervals
-    let tps = 60; // using minecraft as reference for this
-    let fps = 60;
+let ticks, frames; // for intervals
+let fps = 60;
+let tps = 60
+function calcTick() {
+    BasePuppet.UpdateAll();
+    player.ActionHandler();
 
-    ticks = setInterval(() => {
-        BasePuppet.UpdateAll();
-        player.ActionHandler();
+    // debugging
+    _deb.html(pDeb.ListObjectProperties('<br>'));
+}
+function drawFrame() {
+    disp.Clear();
+    BasePuppet.DrawAll();
 
-        // debugging
-        _deb.html(pDeb.ListObjectProperties('<br>'));
-    }, 1000 / tps);
+    // you'll never guess what it is :o
+    player.Debug('rgb(255, 255, 255)', 'xyActual', 'pinpoint');
+}
+function initAll() {
+    // clear previous intervals
+    clearInterval(ticks);
+    clearInterval(frames);
 
-    frames = setInterval(() => {
-        disp.Clear();
-        BasePuppet.DrawAll();
+    // create intervals
+    ticks = setInterval(() => {calcTick()}, 1000 / tps);
+    frames = setInterval(() => {drawFrame()}, 1000 / fps);
 
-        // you'll never guess what it is :o
-        player.Debug('rgb(255, 255, 255)', 'xyActual', 'pinpoint');
-    }, 1000 / fps);
+    // log
+    console.log(`Initialiezd @ ${fps} FPS / ${tps} TPS`)
+}
+
+// debug inputs & buttons
+$('#fps-set').keydown(e => {
+    if (e.code !== 'Enter') return;
+
+    fps = $('#fps-set').val();
+    initAll();
 });
+
+$('#tps-set').keydown(e => {
+    if (e.code !== 'Enter') return;
+
+    tps = $('#tps-set').val();
+    initAll();
+});
+$('#pause').click(() => {
+    if ($('#pause').html() === 'Pause') {
+        $('#pause').html('Play');
+        $('#step').attr('disabled', false);
+
+        clearInterval(ticks);
+        clearInterval(frames);
+    } else {
+        $('#pause').html('Pause');
+        $('#step').attr('disabled', true);
+        initAll();
+    }
+});
+$('#step').click(() => {
+    calcTick();
+    drawFrame();
+});
+
+// first init
+// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+$(document).ready(() => {initAll()});
+
+// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
