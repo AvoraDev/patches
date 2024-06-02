@@ -144,6 +144,7 @@ $('#pause').click(() => {
     } else {
         $('#pause').html('Pause');
         $('#step').attr('disabled', true);
+        
         initAll();
     }
 });
