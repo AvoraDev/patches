@@ -89,6 +89,22 @@ const pDeb = new Shovel(
     ],
     true
 );
+pDeb.formatFunc.number = (item) => {
+    if (!Number.isInteger(item)) return Math.round(item * 100) / 100;
+
+    switch(item) {
+        case PlayerPuppet.AS.Disabled:
+            return '<span style="color: magenta">Disabled</span>';
+        case PlayerPuppet.AS.Off:
+            return '<span style="color: red">Off</span>';
+        case PlayerPuppet.AS.Inactive:
+            return '<span style="color: yellow">Inactive</span>';
+        case PlayerPuppet.AS.Active:
+            return '<span style="color: lightGreen">Active</span>';
+        default:
+            return item;
+    }
+};
 
 let ticks, frames; // for intervals
 let fps = 60;
@@ -144,7 +160,7 @@ $('#pause').click(() => {
     } else {
         $('#pause').html('Pause');
         $('#step').attr('disabled', true);
-        
+
         initAll();
     }
 });

@@ -4,6 +4,14 @@ export class Shovel {
         this.blacklist = blacklist;
         this.blCheckAllDepths = blCheckAllDepths;
         this.keys = this._getAllKeys(this.obj);
+        this.formatFunc = {
+            number(item)    {return Math.round(item * 100) / 100;},
+            string(item)    {return item;},
+            symbol(item)    {return item;},
+            boolean(item)   {return item;},
+            function(item)  {return item;},
+            undefined(item) {return item;}
+        };
     }
     _getAllKeys(obj, depth = 0) {
         let output = [];
@@ -40,7 +48,29 @@ export class Shovel {
             else value = this.obj[key];
 
             // format it
-            if (typeof(value) === 'number') value = value.toFixed(2);
+            switch (typeof(value)) {
+                // case 'bigint':
+                case 'number':
+                    value = this.formatFunc.number(value);
+                    break;
+                case 'string':
+                    value = this.formatFunc.string(value);
+                    break;
+                case 'symbol':
+                    value = this.formatFunc.symbol(value);
+                    break;
+                case 'boolean':
+                    value = this.formatFunc.boolean(value);
+                    break;
+                case 'function':
+                    value = this.formatFunc.function(value);
+                    break;
+                case 'undefined':
+                    value = this.formatFunc.undefined(value);
+                    break;
+                default:
+                    break;
+            }
 
             // add to output
             output += `${key}: ${value} ${breaker}`;
