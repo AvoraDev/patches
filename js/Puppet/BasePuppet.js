@@ -47,6 +47,7 @@ class BP {
         this.zDepth =           (config.zDepth !== undefined) ? config.zDepth : 0;
         this.collidable =       (config.collidable !== undefined) ? config.collidable : true;
         this.collisionRebound = (config.collisionRebound !== undefined) ? config.collisionRebound : true;
+        this.secondaryGraphics = [];
         
         // todo - implement
         this.cheats = {
@@ -223,6 +224,9 @@ class BP {
             this.width,
             this.height
         );
+
+        // why am i allowed to create things like this
+        if (this.secondaryGraphics.length > 0) for (let graphic of this.secondaryGraphics) graphic();
     }
     /**
      * Sets Paintbrush that will be used for all puppets. 

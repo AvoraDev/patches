@@ -81,6 +81,7 @@ const pDeb = new Shovel(
         'zDepth',
         'cheats',
         'collisionRebound',
+        'secondaryGraphics',
         '_movementStep',
         'active',
         'inactive',
@@ -100,11 +101,15 @@ pDeb.formatFunc.number = (item) => {
         case PlayerPuppet.AS.Inactive:
             return '<span style="color: yellow">Inactive</span>';
         case PlayerPuppet.AS.Active:
-            return '<span style="color: lightGreen">Active</span>';
+            return '<span style="color: lightgreen">Active</span>';
         default:
             return item;
     }
 };
+pDeb.formatFunc.boolean = (item) => {
+    if (item) return    '<span style="color: cyan">true</span>';
+    else return         '<span style="color: orange">false</span>'
+}
 
 let ticks, frames; // for intervals
 let fps = 60;

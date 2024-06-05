@@ -9,7 +9,7 @@ export class Shovel {
             string(item)    {return item;},
             symbol(item)    {return item;},
             boolean(item)   {return item;},
-            function(item)  {return item;},
+            function(item)  {return 'func';},
             undefined(item) {return item;}
         };
     }

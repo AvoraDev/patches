@@ -4,10 +4,10 @@ export { PP as PlayerPuppet };
 class PP extends BasePuppet {
     // something akin to an enum
     static _ActionStates = Object.freeze({
-        Disabled: -1,
-        Off: 0,
-        Inactive: 1,
-        Active: 2
+        Disabled: 2,
+        Off: 3,
+        Inactive: 4,
+        Active: 5
     });
     /**
      * todo - Description
