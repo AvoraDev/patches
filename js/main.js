@@ -20,7 +20,7 @@ switch(window.location.protocol) {
 }
 
 // canvas setup
-let disp = new Paintbrush('#disp', '#disp-container', 'black');
+const disp = new Paintbrush('#disp', '#disp-container', 'black');
 disp.EnableAutoResize();
 
 // Puppet setup
@@ -32,11 +32,10 @@ BasePuppet.SetPlayground({
     right: 75
 });
 BasePuppet.Config.playground.debug = true;
-CombatSetup();
 let center = BasePuppet.PGCenter; // used for spawn coords
 
-// other
-let _deb = $('#debug'); 
+// optionals setup
+CombatSetup();
 
 // puppets
 const player = new PlayerPuppet(
@@ -72,14 +71,18 @@ for (let i = 0; i < 50; i++) {
 }
 
 // json jank (isn't really necessary for this, but wanted to practice)
+// note: since the request is syncronous, the rest of the program won't run until it's done
 let req = new XMLHttpRequest();
 req.open('GET', './json/config.json', false);
 req.send();
 let CONFIG = JSON.parse(req.responseText);
 
 // debugging
+const _deb = $('#debug'); 
 const pDeb = new Shovel(player, CONFIG.playerDebugIgnore, true);
 pDeb.formatFunc.number = (item) => {
+    // js gets angry when trying to use .toFixed() on a undefined var
+    // the following math is a workaround
     if (!Number.isInteger(item)) return Math.round(item * 100) / 100;
 
     switch(item) {
@@ -137,7 +140,6 @@ $('#fps-set').keydown(e => {
     fps = $('#fps-set').val();
     initAll();
 });
-
 $('#tps-set').keydown(e => {
     if (e.code !== 'Enter') return;
 
