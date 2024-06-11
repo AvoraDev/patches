@@ -1,0 +1,17 @@
+{
+    "playerDebugIgnore" : [
+        "speed",
+        "width",
+        "height",
+        "color",
+        "zDepth",
+        "cheats",
+        "collisionRebound",
+        "secondaryGraphics",
+        "_movementStep",
+        "active",
+        "inactive",
+        "key",
+        "disabledDuration"
+    ]
+}

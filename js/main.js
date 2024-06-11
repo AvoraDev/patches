@@ -16,6 +16,7 @@ switch(window.location.protocol) {
         break;
     default:
         document.title += " (???)";
+        break;
 }
 
 // canvas setup
@@ -70,26 +71,14 @@ for (let i = 0; i < 50; i++) {
     ));
 }
 
+// json jank (isn't really necessary for this, but wanted to practice)
+let req = new XMLHttpRequest();
+req.open('GET', './json/config.json', false);
+req.send();
+let CONFIG = JSON.parse(req.responseText);
+
 // debugging
-const pDeb = new Shovel(
-    player,
-    [
-        'speed',
-        'width',
-        'height',
-        'color',
-        'zDepth',
-        'cheats',
-        'collisionRebound',
-        'secondaryGraphics',
-        '_movementStep',
-        'active',
-        'inactive',
-        'key',
-        'disabledDuration'
-    ],
-    true
-);
+const pDeb = new Shovel(player, CONFIG.playerDebugIgnore, true);
 pDeb.formatFunc.number = (item) => {
     if (!Number.isInteger(item)) return Math.round(item * 100) / 100;
 
