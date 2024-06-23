@@ -28,19 +28,22 @@
         #disp {
             background-color: white;
         }
-        #debug-container {
+        #debug_container {
             display: block;
             position: fixed;
             top: 0;
             left: 0;
             margin: 0.5rem;
-            padding: 0.25rem 0.5rem;
             line-height: 160%;
             font-size: small;
+        }
+        #debug_container div {
+            margin: 0.5rem 0 ;
+            padding: 0.25rem 0.5rem;
             background-color: rgba(50, 50, 50, 0.6);
             color: white;
         }
-        #debug-container input {
+        #debug_container input {
             width: 8rem;
         }
     </style>
@@ -52,20 +55,32 @@
         <canvas id="disp"></canvas>
     </div>
 
-    <div id="debug-container">
-        <p id="debug">000</p>
-        <label for="fps-set">Set FPS:</label> <br>
-        <input type="number" id="fps-set" placeholder="Press enter to set">
+    <div id="debug_container">
+        <div>
+            <p style="white-space: pre-line;"><strong>Keybinds</strong>
+                W/A/S/D - Movement
+                J - Attack (WIP)
+                / - Toggle Advanced Debug
+                . - Toggle this menu
+            </p>
 
-        <br> <br>
-        
-        <label for="tps-set">Set TPS:</label> <br>
-        <input type="number" id="tps-set" placeholder="Press enter to set">
+            <p id="debug">000</p>
+        </div>
 
-        <br> <br>
+        <div id="advanced_debug" style="display: none;">
+            <label for="fps-set">Set FPS:</label> <br>
+            <input type="number" id="fps-set" placeholder="Press enter to set">
 
-        <button type="button" id="pause">Pause</button>
-        <button type="button" id="step" disabled>Step</button>
+            <br> <br>
+            
+            <label for="tps-set">Set TPS:</label> <br>
+            <input type="number" id="tps-set" placeholder="Press enter to set">
+
+            <br> <br>
+
+            <button type="button" id="pause">Pause</button>
+            <button type="button" id="step" disabled>Step</button>
+        </div>
     </div>
 </body>
 </html>

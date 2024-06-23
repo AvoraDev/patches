@@ -71,14 +71,13 @@ for (let i = 0; i < 50; i++) {
 }
 
 // json jank (isn't really necessary for this, but wanted to practice)
-// note: since the request is syncronous, the rest of the program won't run until it's done
 let req = new XMLHttpRequest();
-req.open('GET', './json/config.json', false);
+req.open('GET', './json/config.json', false /* async set to false */ );
 req.send();
 let CONFIG = JSON.parse(req.responseText);
 
 // debugging
-const _deb = $('#debug'); 
+const deb = $('#debug'); 
 const pDeb = new Shovel(player, CONFIG.playerDebugIgnore, true);
 pDeb.formatFunc.number = (item) => {
     // js gets angry when trying to use .toFixed() on a undefined var
@@ -111,7 +110,7 @@ function calcTick() {
     player.ActionHandler();
 
     // debugging
-    _deb.html(pDeb.ListObjectProperties('<br>'));
+    deb.html(pDeb.ListObjectProperties('<br>'));
 }
 function drawFrame() {
     disp.Clear();
@@ -163,6 +162,18 @@ $('#pause').click(() => {
 $('#step').click(() => {
     calcTick();
     drawFrame();
+});
+
+// menu keybinds
+$(window).keydown(e => {
+    switch(e.code) {
+        case 'Slash':
+            $('#advanced_debug').toggle();
+            break;
+        case 'Period':
+            $('#debug_container').toggle();
+            break;
+    }
 });
 
 // first init
