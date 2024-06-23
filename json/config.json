@@ -12,6 +12,7 @@
         "active",
         "inactive",
         "key",
-        "disabledDuration"
+        "disabledDuration",
+        "stats"
     ]
 }

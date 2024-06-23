@@ -68,6 +68,8 @@ for (let i = 0; i < 50; i++) {
             color: `hsl(${RNG.randInt(0, 360)}, 100%, 50%)`
         }
     ));
+
+    bots[bots.length - 1].ImplementCombat(100, 100, 100, 100, 100);
 }
 
 // json jank (isn't really necessary for this, but wanted to practice)

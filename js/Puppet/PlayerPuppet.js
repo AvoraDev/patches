@@ -44,10 +44,10 @@ class PP extends BasePuppet {
                 },
                 inactive: () => {
                     if (this.vect.y < 0) this.vect.y += this._movementStep;
-                    else this._ctrs.up.flag = PP.AS.Off;
+                    else this._ctrs.up.state = PP.AS.Off;
                 },
                 key: 'KeyW',
-                flag: PP.AS.Off,
+                state: PP.AS.Off,
                 disabledDuration: 0
             },
             down: {
@@ -57,10 +57,10 @@ class PP extends BasePuppet {
                 },
                 inactive: () => {
                     if (this.vect.y > 0) this.vect.y -= this._movementStep;
-                    else this._ctrs.down.flag = PP.AS.Off;
+                    else this._ctrs.down.state = PP.AS.Off;
                 },
                 key: 'KeyS',
-                flag: PP.AS.Off,
+                state: PP.AS.Off,
                 disabledDuration: 0
             },
             left: {
@@ -70,10 +70,10 @@ class PP extends BasePuppet {
                 },
                 inactive: () => {
                     if (this.vect.x < 0) this.vect.x += this._movementStep;
-                    else this._ctrs.left.flag = PP.AS.Off;
+                    else this._ctrs.left.state = PP.AS.Off;
                 },
                 key: 'KeyA',
-                flag: PP.AS.Off,
+                state: PP.AS.Off,
                 disabledDuration: 0
             },
             right: {
@@ -83,15 +83,15 @@ class PP extends BasePuppet {
                 },
                 inactive: () => {
                     if (this.vect.x > 0) this.vect.x -= this._movementStep;
-                    else this._ctrs.right.flag = PP.AS.Off;
+                    else this._ctrs.right.state = PP.AS.Off;
                 },
                 key: 'KeyD',
-                flag: PP.AS.Off,
+                state: PP.AS.Off,
                 disabledDuration: 0
             }
         }
     }
-    AddAction(name, activeFunc, inactiveFunc, key, disabledDuration = 0, startFlag = PP.AS.Off) {
+    AddAction(name, activeFunc, inactiveFunc, key, disabledDuration = 0, startState = PP.AS.Off) {
         if (this._ctrs.hasOwnProperty(name)) {
             console.log(`Warning: '${name}' action already exists. Use another name.`);
             return;
@@ -101,7 +101,7 @@ class PP extends BasePuppet {
             active: activeFunc,
             inactive: inactiveFunc,
             key: key,
-            flag: startFlag,
+            state: startState,
             disabledDuration: disabledDuration
         };
     }
@@ -114,9 +114,9 @@ class PP extends BasePuppet {
             if (!this.controllable) return;
 
             Object.keys(this._ctrs).forEach(action => {
-                if (this._ctrs[action].flag === PP.AS.Disabled) return;
+                if (this._ctrs[action].state === PP.AS.Disabled) return;
 
-                if (e.code === this._ctrs[action].key) this._ctrs[action].flag = PP.AS.Active;
+                if (e.code === this._ctrs[action].key) this._ctrs[action].state = PP.AS.Active;
             });
         });
 
@@ -124,9 +124,9 @@ class PP extends BasePuppet {
             if (!this.controllable) return;
             
             Object.keys(this._ctrs).forEach(action => {
-                if (this._ctrs[action].flag === PP.AS.Disabled) return;
+                if (this._ctrs[action].state === PP.AS.Disabled) return;
 
-                if (e.code === this._ctrs[action].key) this._ctrs[action].flag = PP.AS.Inactive;
+                if (e.code === this._ctrs[action].key) this._ctrs[action].state = PP.AS.Inactive;
             });
         });
     }
@@ -136,7 +136,7 @@ class PP extends BasePuppet {
      */
     ActionHandler() {
         Object.keys(this._ctrs).forEach(action => {
-            switch(this._ctrs[action].flag) {
+            switch(this._ctrs[action].state) {
                 case PP.AS.Disabled:
                     // ignore durations of 0
                     if (this._ctrs[action].disabledDuration === 0) break;
@@ -145,10 +145,10 @@ class PP extends BasePuppet {
                     if (this._ddc[action] === undefined) this._ddc[action] = 1;
                     else this._ddc[action]++;
                     
-                    // reset flag when complete
+                    // reset state when complete
                     if (this._ddc[action] > this._ctrs[action].disabledDuration) {
                         this._ddc[action] = 0;
-                        this._ctrs[action].flag = PP.AS.Off;
+                        this._ctrs[action].state = PP.AS.Off;
                     }
                     break;
                 case PP.AS.Off:
