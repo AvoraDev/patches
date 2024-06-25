@@ -1,7 +1,7 @@
 import { Paintbrush } from "./Puppet/Paintbrush.js";
 import { BasePuppet } from "./Puppet/BasePuppet.js";
 import { PlayerPuppet } from "./Puppet/PlayerPuppet.js";
-import { CombatSetup, AddDefaultMelee} from "./Puppet/optional/combat.js";
+import { CombatSetup} from "./Puppet/optional/combat.js";
 import { Shovel } from "./util/Shovel.js"
 import { RNG } from "./util/RNG.js";
 
@@ -44,16 +44,16 @@ const player = new PlayerPuppet(
     {x: 0, y: 0},
     3,
     {
-        width: 15,
-        height: 15,
+        width: 30,
+        height: 30,
         color: 'rgb(100, 255, 50)'
     }
 )
 player.ImplementCombat(100, 100, 100, 100, 100);
-AddDefaultMelee(player, 'KeyJ', 1.2);
+player.AddMelee('KeyJ', 1.2);
 
 const bots = [];
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 10; i++) {
     bots.push(new BasePuppet(
         center.x + RNG.randFloat(-40, 40),
         center.y + RNG.randFloat(-40, 40),
@@ -63,8 +63,8 @@ for (let i = 0; i < 50; i++) {
         },
         RNG.randInt(2, 6),
         {
-            width: 10,
-            height: 10,
+            width: 20,
+            height: 20,
             color: `hsl(${RNG.randInt(0, 360)}, 100%, 50%)`
         }
     ));
