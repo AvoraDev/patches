@@ -52,7 +52,7 @@ export function CombatSetup() {
         if (Object.keys(this._ctrs).indexOf('melee') !== -1) {
             console.log('Warning: Melee has already been added to this puppet');
             return;
-        } else if (this.baseStats !== undefined || this.condition !== undefined) {
+        } else if (this.baseStats === undefined || this.condition === undefined) {
             console.log('Warning: Run .ImplementCombat() before using this function');
             console.log('Note: decide if this should be a thing (you better remember what that means)');
             return;
@@ -61,13 +61,14 @@ export function CombatSetup() {
         // what do i even name this lol
         // i swear the amount of math this project makes me do
         // is gonna make my brain implode
-        let sizeMultiplier = 0.5
+        let sizeMultiplier = 0.9;
+        let extra = 10;
         this.foo = new HelperPuppet(
             this,
             sizeMultiplier,
             {
-                x: this.hWidth + (this.width * (sizeMultiplier / 2)),
-                y: this.hWidth + (this.width * (sizeMultiplier / 2))
+                x: this.hWidth + (this.width * (sizeMultiplier / 2)) + extra,
+                y: this.hWidth + (this.width * (sizeMultiplier / 2)) + extra
             }
         );
     

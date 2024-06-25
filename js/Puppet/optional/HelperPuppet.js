@@ -14,10 +14,10 @@ class HP extends BasePuppet {
             {
                 width: puppet.width * sizeMultiplier,
                 height: puppet.height * sizeMultiplier,
-                color: 'red'
+                color: 'rgba(255, 0, 0, 0.7)'
             },
             {
-                zDepth: puppet.zDepth + 1,
+                zDepth: puppet.zDepth - 1,
                 collidable: false // ,
                 // collisionRebound: false
             }
@@ -33,6 +33,7 @@ class HP extends BasePuppet {
     }
     _move() {
         // this will replace the default move function
+        // note: offset is larger on diagonal movements, look into normalizing it
         this.x = this.leader.x + (Math.sign(this.leader.vect.x) * this.offset.x);
         this.y = this.leader.y + (Math.sign(this.leader.vect.y) * this.offset.y);
     }

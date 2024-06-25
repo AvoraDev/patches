@@ -174,6 +174,7 @@ class BP {
     }
     _resolveCollision(pInfo) {
         // unpack pInfo for readability
+        // todo - please make this easier to read
         let i = pInfo[0];
         let ovX = pInfo[1];
         let ovY = pInfo[2];

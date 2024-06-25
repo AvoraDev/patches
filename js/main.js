@@ -1,9 +1,9 @@
-import { Paintbrush } from "./Puppet/Paintbrush.js";
-import { BasePuppet } from "./Puppet/BasePuppet.js";
+import { Paintbrush }   from "./Puppet/Paintbrush.js";
+import { BasePuppet }   from "./Puppet/BasePuppet.js";
 import { PlayerPuppet } from "./Puppet/PlayerPuppet.js";
-import { CombatSetup} from "./Puppet/optional/combat.js";
-import { Shovel } from "./util/Shovel.js"
-import { RNG } from "./util/RNG.js";
+import { CombatSetup }  from "./Puppet/optional/combat.js";
+import { Shovel }       from "./util/Shovel.js"
+import { RNG }          from "./util/RNG.js";
 
 // change title
 switch(window.location.protocol) {
